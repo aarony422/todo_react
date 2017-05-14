@@ -2,7 +2,7 @@ import React from 'react'
 
 // we need to pass in data to the stateless functional component through props
 export const TodoForm = (props) => (
-  <form>
+  <form onSubmit={props.handleSubmit}>
     <input type="text"
        onChange={props.handleInputChange}
        value={props.currentTodo}/>
@@ -15,6 +15,7 @@ export const TodoForm = (props) => (
 // propTypes object in our component is lowerCased 'p'
 // isRequired makes sure that they are passed in, otherwise a error is thrown
 TodoForm.propTypes = {
+  handleSubmit: React.PropTypes.func.isRequired,
   currentTodo: React.PropTypes.string.isRequired, // React PropTypes is capital 'P'
   handleInputChange: React.PropTypes.func.isRequired
 }
