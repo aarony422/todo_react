@@ -22,6 +22,7 @@ class App extends Component {
     // correct context
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleEmptySubmit = this.handleEmptySubmit.bind(this);
   }
   handleSubmit(e) {
     e.preventDefault(); // prevent the form to submit through GET
@@ -30,7 +31,14 @@ class App extends Component {
     const updatedTodos = addTodo(this.state.todos, newTodo)
     this.setState({
       todos: updatedTodos,
-      currentTodo: ''
+      currentTodo: '',
+      errorMessage: ''
+    })
+  }
+  handleEmptySubmit(e) {
+    e.preventDefault();
+    this.setState({
+      errorMessage: 'Please supply a todo name'
     })
   }
   // In order for the input to update our state, we need an event handler
@@ -45,6 +53,8 @@ class App extends Component {
     })
   }
   render() {
+    // if currentTodo is truthy, use handleSubmit, o.w. use handleEmptySubmit
+    const sumbitHandler = this.state.currentTodo ? this.handleSubmit : this.handleEmptySubmit;
     return (
       <div className="App">
         <div className="App-header">
@@ -52,9 +62,10 @@ class App extends Component {
           <h2>React Todos</h2>
         </div>
         <div className="Todo-App">
+          {this.state.errorMessage && <span className="error">{this.state.errorMessage}</span>}
           <TodoForm handleInputChange={this.handleInputChange}
             currentTodo={this.state.currentTodo}
-            handleSubmit={this.handleSubmit}/>
+            handleSubmit={sumbitHandler}/>
           <TodoList todos={this.state.todos}/>
         </div>
       </div>
