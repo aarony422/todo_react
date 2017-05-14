@@ -11,8 +11,25 @@ class App extends Component {
         {id: 1, name: 'Learn JSX', isComplete: true},
         {id: 2, name: 'Build React App', isComplete: false},
         {id: 3, name: 'Ship it!', isComplete: false}
-      ]
+      ],
+      currentTodo: ''
     }
+    // In order for handleInputChange to change our state, we need to reference
+    // it in our constructor and bind it to 'this'.
+    // This ensures that when we call this.setState, 'this' refers to the
+    // correct context
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+  // In order for the input to update our state, we need an event handler
+  // To change our state, we need to use the setState() method, by giving it
+  // an object, with key value pairs that we want to update
+  // We then set it has a handler for the onChange event of our input
+  // This makes our view is a function of our state, to keep view in sync with
+  // our data
+  handleInputChange(e) {
+    this.setState({
+      currentTodo: e.target.value
+    })
   }
   render() {
     return (
@@ -23,7 +40,7 @@ class App extends Component {
         </div>
         <div className="Todo-App">
           <form>
-            <input type="text"/>
+            <input type="text" onChange={this.handleInputChange} value={this.state.currentTodo}/>
           </form>
           <div className="Todo-List">
             <ul>
