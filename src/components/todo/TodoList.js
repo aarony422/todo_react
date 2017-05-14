@@ -8,3 +8,8 @@ export const TodoList = (props) => (
     </ul>
   </div>
 )
+
+// Define propTypes
+TodoList.propTypes = {
+  todos: React.PropTypes.array.isRequired
+}

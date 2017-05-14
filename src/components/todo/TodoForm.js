@@ -8,3 +8,13 @@ export const TodoForm = (props) => (
        value={props.currentTodo}/>
   </form>
 )
+
+// If we want to make sure other developers using this component passes in the
+// right props, we can specify propTypes
+
+// propTypes object in our component is lowerCased 'p'
+// isRequired makes sure that they are passed in, otherwise a error is thrown
+TodoForm.propTypes = {
+  currentTodo: React.PropTypes.string.isRequired, // React PropTypes is capital 'P'
+  handleInputChange: React.PropTypes.func.isRequired
+}
