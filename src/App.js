@@ -5,26 +5,26 @@ import {TodoForm, TodoList} from './components/todo'
 import {addTodo, generateId} from './lib/todoHelpers'
 
 class App extends Component {
-  // compose dynamic content, we need state
-  constructor() {
-    super();
-    this.state = {
-      todos: [
-        {id: 1, name: 'Learn JSX', isComplete: true},
-        {id: 2, name: 'Build React App', isComplete: false},
-        {id: 3, name: 'Ship it!', isComplete: false}
-      ],
-      currentTodo: ''
-    }
-    // In order for handleInputChange to change our state, we need to reference
-    // it in our constructor and bind it to 'this'.
-    // This ensures that when we call this.setState, 'this' refers to the
-    // correct context
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleEmptySubmit = this.handleEmptySubmit.bind(this);
+  // property intializer syntax in ES6 classes
+  // state is an instance property of this class
+  // Available as this.state
+  state = {
+    todos: [
+      {id: 1, name: 'Learn JSX', isComplete: true},
+      {id: 2, name: 'Build React App', isComplete: false},
+      {id: 3, name: 'Ship it!', isComplete: false}
+    ],
+    currentTodo: ''
   }
-  handleSubmit(e) {
+
+  // compose dynamic content, we need state
+  // In order for handleInputChange to change our state, we need to reference
+  // it in our constructor and bind it to 'this'.
+  // This ensures that when we call this.setState, 'this' refers to the
+  // correct context. This can also be accomplished by using the arrow function
+  // syntax for functions, that automatically pass in 'this'
+  // Thus, we don't need a custom constructor
+  handleSubmit = (e) => {
     e.preventDefault(); // prevent the form to submit through GET
     const newId = generateId()
     const newTodo = {id: newId, name: this.state.currentTodo, isComplete: false}
@@ -35,7 +35,7 @@ class App extends Component {
       errorMessage: ''
     })
   }
-  handleEmptySubmit(e) {
+  handleEmptySubmit = (e) => {
     e.preventDefault();
     this.setState({
       errorMessage: 'Please supply a todo name'
@@ -47,7 +47,7 @@ class App extends Component {
   // We then set it has a handler for the onChange event of our input
   // This makes our view is a function of our state, to keep view in sync with
   // our data
-  handleInputChange(e) {
+  handleInputChange = (e) => {
     this.setState({
       currentTodo: e.target.value
     })
