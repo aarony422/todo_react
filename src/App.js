@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {TodoForm, TodoList} from './components/todo'
-import {addTodo, generateId} from './lib/todoHelpers'
+import {addTodo, generateId, findById, toggleTodo, updateTodo} from './lib/todoHelpers'
 
 class App extends Component {
   // property intializer syntax in ES6 classes
@@ -24,6 +24,14 @@ class App extends Component {
   // correct context. This can also be accomplished by using the arrow function
   // syntax for functions, that automatically pass in 'this'
   // Thus, we don't need a custom constructor
+
+  handleToggle = (id) => {
+    const todo = findById(id, this.state.todos)
+    const toggled = toggleTodo(todo)
+    const updatedTodos = updateTodo(this.state.todos, toggled)
+    this.setState({todos: updatedTodos})
+  }
+
   handleSubmit = (e) => {
     e.preventDefault(); // prevent the form to submit through GET
     const newId = generateId()
@@ -66,7 +74,7 @@ class App extends Component {
           <TodoForm handleInputChange={this.handleInputChange}
             currentTodo={this.state.currentTodo}
             handleSubmit={sumbitHandler}/>
-          <TodoList todos={this.state.todos}/>
+          <TodoList handleToggle={this.handleToggle} todos={this.state.todos}/>
         </div>
       </div>
     );
