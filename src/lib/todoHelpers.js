@@ -14,3 +14,9 @@ export const updateTodo = (startTodo, updatedTodo) => {
     return item
   })
 }
+
+export const removeTodo = (startTodo, removeId) => {
+  return startTodo.filter(item => {
+    return item.id !== removeId
+  })
+}

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {TodoForm, TodoList} from './components/todo'
-import {addTodo, generateId, findById, toggleTodo, updateTodo} from './lib/todoHelpers'
+import {addTodo, generateId, findById, toggleTodo, updateTodo, removeTodo} from './lib/todoHelpers'
+import {pipe, partial} from './lib/utils'
 
 class App extends Component {
   // property intializer syntax in ES6 classes
@@ -26,9 +27,8 @@ class App extends Component {
   // Thus, we don't need a custom constructor
 
   handleToggle = (id) => {
-    const todo = findById(id, this.state.todos)
-    const toggled = toggleTodo(todo)
-    const updatedTodos = updateTodo(this.state.todos, toggled)
+    const getUpdatedTodos = pipe(findById, toggleTodo, partial(updateTodo, this.state.todos))
+    const updatedTodos = getUpdatedTodos(id, this.state.todos)
     this.setState({todos: updatedTodos})
   }
 
@@ -47,6 +47,13 @@ class App extends Component {
     e.preventDefault();
     this.setState({
       errorMessage: 'Please supply a todo name'
+    })
+  }
+  handleRemove = (id, e) => {
+    e.preventDefault();
+    const updatedTodos = removeTodo(this.state.todos, id)
+    this.setState({
+      todos: updatedTodos
     })
   }
   // In order for the input to update our state, we need an event handler
@@ -74,7 +81,10 @@ class App extends Component {
           <TodoForm handleInputChange={this.handleInputChange}
             currentTodo={this.state.currentTodo}
             handleSubmit={sumbitHandler}/>
-          <TodoList handleToggle={this.handleToggle} todos={this.state.todos}/>
+          <TodoList
+            handleToggle={this.handleToggle}
+            todos={this.state.todos}
+            handleRemove={this.handleRemove}/>
         </div>
       </div>
     );

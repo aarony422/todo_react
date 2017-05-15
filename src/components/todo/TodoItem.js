@@ -8,8 +8,10 @@ export const TodoItem = (props) => {
   // This means handleToggle is a function that already knows the value of its
   // first arg.
   const handleToggle = partial(props.handleToggle, props.id)
+  const handleRemove = partial(props.handleRemove, props.id)
   return (
     <li>
+      <span className='delete-item'><a href="#" onClick={handleRemove}>X</a></span>
       <input type="checkbox"
         checked={props.isComplete}
         onChange={handleToggle}/>
