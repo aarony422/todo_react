@@ -4,7 +4,7 @@ import './App.css';
 import {TodoForm, TodoList, Footer} from './components/todo'
 import {addTodo, generateId, findById, toggleTodo, updateTodo, removeTodo, filterTodos} from './lib/todoHelpers'
 import {pipe, partial} from './lib/utils'
-import {loadTodos, createTodo, saveTodo} from './lib/todoService'
+import {loadTodos, createTodo, saveTodo, destroyTodo} from './lib/todoService'
 
 class App extends Component {
   // property intializer syntax in ES6 classes
@@ -74,6 +74,8 @@ class App extends Component {
     this.setState({
       todos: updatedTodos
     })
+    destroyTodo(id)
+      .then(() => this.showTempMessage('Todo Removed'))
   }
   // In order for the input to update our state, we need an event handler
   // To change our state, we need to use the setState() method, by giving it

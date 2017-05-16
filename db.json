@@ -6,11 +6,6 @@
       "isComplete": true
     },
     {
-      "id": 2,
-      "name": "Start Server",
-      "isComplete": false
-    },
-    {
       "id": 3,
       "name": "Connect to Server",
       "isComplete": false
@@ -18,11 +13,6 @@
     {
       "id": 4,
       "name": "Setup Fetch",
-      "isComplete": false
-    },
-    {
-      "id": 22437,
-      "name": "new todo",
       "isComplete": false
     },
     {
