@@ -4,22 +4,24 @@ import './App.css';
 import {TodoForm, TodoList, Footer} from './components/todo'
 import {addTodo, generateId, findById, toggleTodo, updateTodo, removeTodo, filterTodos} from './lib/todoHelpers'
 import {pipe, partial} from './lib/utils'
+import {loadTodos} from './lib/todoService'
 
 class App extends Component {
   // property intializer syntax in ES6 classes
   // state is an instance property of this class
   // Available as this.state
   state = {
-    todos: [
-      {id: 1, name: 'Learn JSX', isComplete: true},
-      {id: 2, name: 'Build React App', isComplete: false},
-      {id: 3, name: 'Ship it!', isComplete: false}
-    ],
+    todos: [],
     currentTodo: ''
   }
 
   static contextTypes = {
     route: React.PropTypes.string
+  }
+
+  componentDidMount() {
+    loadTodos() // return a promise
+      .then(todos => this.setState({todos}))
   }
 
   // compose dynamic content, we need state
