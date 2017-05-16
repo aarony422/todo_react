@@ -27,6 +27,13 @@ export class Router extends Component {
       linkHandler: this.handleLinkClick
     }
   }
+  // keep application state in sync with broswer history
+  componentDidMount() {
+    // This will fire every time we use the back and forward buttons in browser
+    window.onpopstate = () => {
+      this.setState({route: getCurrentPath()})
+    }
+  }
   render() {
     return <div>{this.props.children}</div>
   }
