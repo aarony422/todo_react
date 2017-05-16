@@ -3,7 +3,7 @@
     {
       "id": 1,
       "name": "Setup Server",
-      "isComplete": true
+      "isComplete": false
     },
     {
       "id": 3,
@@ -13,11 +13,6 @@
     {
       "id": 4,
       "name": "Setup Fetch",
-      "isComplete": false
-    },
-    {
-      "id": 92378,
-      "name": "another new todo",
       "isComplete": false
     },
     {
