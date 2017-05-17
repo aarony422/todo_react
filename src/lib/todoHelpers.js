@@ -33,7 +33,8 @@ export const filterTodos = (list, route) => {
 }
 
 // Redux functions
-
+// reducer composition: different reducers specify how different parts of the
+// state tree are updated in response to actions
 
 // reducer for individual todo items
 const todo = (state, action) => {
@@ -52,7 +53,7 @@ const todo = (state, action) => {
 }
 
 // todos reducer
-export const todosRedux = (state = [], action) => {
+export const todos = (state = [], action) => {
   switch(action.type) {
     case 'ADD_TODO':
       return [ ...state, todo(undefined, action) ]
@@ -60,5 +61,35 @@ export const todosRedux = (state = [], action) => {
       return state.map((todoItem) => todo(todoItem, action));
     default:
       return state;
+  }
+}
+
+// visibilityFilter reducer
+const visibilityFilter = (state='SHOW_ALL', action) => {
+  switch(action.type) {
+    case 'SET_VISIBILITY_FILTER':
+      return action.filter;
+    default:
+      return state;
+  }
+}
+
+// currentTodo reducer
+const currentTodo = (state='', action) => {
+  switch(action.type) {
+    case 'CHANGE_CURRENT_TODO':
+      return action.name;
+    default:
+      return state;
+  }
+}
+
+// Reducer composition with objects
+// top-level reducer
+const todoApp = (state = {}, action) => {
+  return {
+    todos: todos( state.todos, action),
+    visibilityFilter: visibilityFilter( state.visibilityFilter, action),
+    currentTodo: currentTodo(state.currentTodo, action)
   }
 }

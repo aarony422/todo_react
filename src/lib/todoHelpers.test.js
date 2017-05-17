@@ -1,4 +1,4 @@
-import {addTodo, findById, toggleTodo, updateTodo, removeTodo, filterTodos, todosRedux} from './todoHelpers'
+import {addTodo, findById, toggleTodo, updateTodo, removeTodo, filterTodos, todos} from './todoHelpers'
 import deepFreeze from 'deep-freeze'
 
 // Test follows a standard structure: arrange, act, assert
@@ -192,7 +192,7 @@ test('todosReducer should add a new todo to the state', () => {
   deepFreeze(action);
 
   expect(
-    todosRedux(stateBefore, action)
+    todos(stateBefore, action)
   ).toEqual(stateAfter);
 })
 
@@ -231,6 +231,6 @@ test('todosReducer should toggle the isComplete property of todo item with id', 
   deepFreeze(action);
 
   expect(
-    todosRedux(stateBefore, action)
+    todos(stateBefore, action)
   ).toEqual(stateAfter);
 })

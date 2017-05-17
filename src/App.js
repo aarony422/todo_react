@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {TodoForm, TodoList, Footer} from './components/todo'
-import {addTodo, generateId, findById, toggleTodo, updateTodo, removeTodo, filterTodos} from './lib/todoHelpers'
+import {addTodo, generateId, findById, toggleTodo, updateTodo, removeTodo, filterTodos, todoApp} from './lib/todoHelpers'
 import {pipe, partial} from './lib/utils'
 import {loadTodos, createTodo, saveTodo, destroyTodo} from './lib/todoService'
+import { createStore } from 'redux';
 
 class App extends Component {
   // property intializer syntax in ES6 classes
@@ -14,6 +15,10 @@ class App extends Component {
     todos: [],
     currentTodo: ''
   }
+
+  /*
+  store = createStore(todoApp);
+  */
 
   static contextTypes = {
     route: React.PropTypes.string
