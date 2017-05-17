@@ -1,3 +1,4 @@
+// Start server using 'json-server -p 8080 --watch db.json'
 const baseUrl = 'http://localhost:8080/todos'
 
 export const loadTodos = () => {
