@@ -34,20 +34,30 @@ export const filterTodos = (list, route) => {
 
 // Redux functions
 
+
+// reducer for individual todo items
+const todo = (state, action) => {
+  switch(action.type) {
+    case 'ADD_TODO':
+      return {id: action.id, name: action.name, isComplete: false};
+    case 'TOGGLE_TODO':
+      if (state.id === action.id) {
+        return {...state, isComplete: !state.isComplete};
+      } else {
+        return state;
+      }
+    default:
+      return state;
+  }
+}
+
 // todos reducer
 export const todosRedux = (state = [], action) => {
   switch(action.type) {
     case 'ADD_TODO':
-      const newTodo = {id: action.id, name: action.name, isComplete: false}
-      return [...state, newTodo ]
+      return [ ...state, todo(undefined, action) ]
     case 'TOGGLE_TODO':
-      return state.map((todo) => {
-        if (todo.id === action.id) {
-          return {...todo, isComplete: !todo.isComplete}
-        } else {
-          return todo
-        }
-      })
+      return state.map((todoItem) => todo(todoItem, action));
     default:
       return state;
   }
