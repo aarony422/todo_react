@@ -31,3 +31,24 @@ export const filterTodos = (list, route) => {
       return list
   }
 }
+
+// Redux functions
+
+// todos reducer
+export const todosRedux = (state = [], action) => {
+  switch(action.type) {
+    case 'ADD_TODO':
+      const newTodo = {id: action.id, name: action.name, isComplete: false}
+      return [...state, newTodo ]
+    case 'TOGGLE_TODO':
+      return state.map((todo) => {
+        if (todo.id === action.id) {
+          return {...todo, isComplete: !todo.isComplete}
+        } else {
+          return todo
+        }
+      })
+    default:
+      return state;
+  }
+}

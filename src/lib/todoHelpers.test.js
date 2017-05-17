@@ -1,7 +1,8 @@
-import {addTodo, findById, toggleTodo, updateTodo, removeTodo, filterTodos} from './todoHelpers'
+import {addTodo, findById, toggleTodo, updateTodo, removeTodo, filterTodos, todosRedux} from './todoHelpers'
+import deepFreeze from 'deep-freeze'
 
 // Test follows a standard structure: arrange, act, assert
-test.skip('addTodo should add the passed todo to the list', () => {
+test('addTodo should add the passed todo to the list', () => {
   // Arrange
   const startTodos = [
     {id:1, name: 'one', isComplete: false},
@@ -22,7 +23,7 @@ test.skip('addTodo should add the passed todo to the list', () => {
 })
 
 
-test.skip('addTodo should not mutate the existing todo array', () => {
+test('addTodo should not mutate the existing todo array', () => {
   const startTodos = [
     {id:1, name: 'one', isComplete: false},
     {id:2, name: 'two', isComplete: false}
@@ -43,7 +44,7 @@ test.skip('addTodo should not mutate the existing todo array', () => {
 // Tests for changing the isCompleted property
 // Use test.skip to skip that test
 
-test.skip('findById should return the expected item from an array', () => {
+test('findById should return the expected item from an array', () => {
   const startTodos = [
     {id:1, name: 'one', isComplete: false},
     {id:2, name: 'two', isComplete: false},
@@ -54,20 +55,20 @@ test.skip('findById should return the expected item from an array', () => {
   expect(result).toEqual(expected)
 })
 
-test.skip('toggleTodo should toggle the isComplete prop of a todo', () => {
+test('toggleTodo should toggle the isComplete prop of a todo', () => {
   const startTodo = {id:2, name: 'two', isComplete: false}
   const expected = {id:2, name: 'two', isComplete: true}
   const result = toggleTodo(startTodo)
   expect(result).toEqual(expected)
 })
 
-test.skip('toggleTodo should not mutate the original todo', () => {
+test('toggleTodo should not mutate the original todo', () => {
   const startTodo = {id:2, name: 'two', isComplete: false}
   const result = toggleTodo(startTodo)
   expect(result).not.toBe(startTodo)
 })
 
-test.skip('updateTodo should update an item by id', () => {
+test('updateTodo should update an item by id', () => {
   const startTodos = [
     {id:1, name: 'one', isComplete: false},
     {id:2, name: 'two', isComplete: false},
@@ -85,7 +86,7 @@ test.skip('updateTodo should update an item by id', () => {
   expect(result).toEqual(expectedTodos)
 })
 
-test.skip('updateTodo should not mutate the original array', () => {
+test('updateTodo should not mutate the original array', () => {
   const startTodos = [
     {id:1, name: 'one', isComplete: false},
     {id:2, name: 'two', isComplete: false},
@@ -100,7 +101,7 @@ test.skip('updateTodo should not mutate the original array', () => {
 
 // Tests for removeTodos
 
-test.skip('removeTodo should remove an item by id', () => {
+test('removeTodo should remove an item by id', () => {
   const startTodos = [
     {id:1, name: 'one', isComplete: false},
     {id:2, name: 'two', isComplete: false},
@@ -116,7 +117,7 @@ test.skip('removeTodo should remove an item by id', () => {
   expect(result).toEqual(expectedTodos)
 })
 
-test.skip('removeTodo should not mutate the original array', () => {
+test('removeTodo should not mutate the original array', () => {
   const startTodos = [
     {id:1, name: 'one', isComplete: false},
     {id:2, name: 'two', isComplete: false},
@@ -170,4 +171,66 @@ test('filterTodos should return only incompleted items for the active route', ()
   const result = filterTodos(startTodos, '/active')
 
   expect(result).toEqual(expected)
+})
+
+// Tests for todo reducer
+test('todosReducer should add a new todo to the state', () => {
+  const stateBefore = [];
+  const action = {
+    type: 'ADD_TODO',
+    id: 0,
+    name: 'Learn Redux'
+  };
+  const stateAfter = [
+    {
+      id: 0,
+      name: 'Learn Redux',
+      isComplete: false
+    }
+  ];
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(
+    todosRedux(stateBefore, action)
+  ).toEqual(stateAfter);
+})
+
+test('todosReducer should toggle the isComplete property of todo item with id', () => {
+  const stateBefore = [
+    {
+      id: 0,
+      name: 'Learn Redux',
+      isComplete: false
+    },
+    {
+      id: 1,
+      name: 'Go Shopping',
+      isComplete: false
+    }
+  ];
+  const action = {
+      type: 'TOGGLE_TODO',
+      id: 1
+  };
+
+  const stateAfter = [
+    {
+      id: 0,
+      name: 'Learn Redux',
+      isComplete: false
+    },
+    {
+      id: 1,
+      name: 'Go Shopping',
+      isComplete: true
+    }
+  ];
+
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(
+    todosRedux(stateBefore, action)
+  ).toEqual(stateAfter);
 })
