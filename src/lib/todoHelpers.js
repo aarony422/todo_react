@@ -1,3 +1,5 @@
+import { combineReducers } from 'redux';
+
 export const addTodo = (list, item) => [...list, item]
 
 export const generateId = () => Math.floor(Math.random()*100000)
@@ -53,6 +55,7 @@ const todo = (state, action) => {
 }
 
 // todos reducer
+// exported for testing purposes
 export const todos = (state = [], action) => {
   switch(action.type) {
     case 'ADD_TODO':
@@ -86,10 +89,8 @@ const currentTodo = (state='', action) => {
 
 // Reducer composition with objects
 // top-level reducer
-const todoApp = (state = {}, action) => {
-  return {
-    todos: todos( state.todos, action),
-    visibilityFilter: visibilityFilter( state.visibilityFilter, action),
-    currentTodo: currentTodo(state.currentTodo, action)
-  }
-}
+export const todoApp = combineReducers({
+  todos,
+  visibilityFilter,
+  currentTodo
+})

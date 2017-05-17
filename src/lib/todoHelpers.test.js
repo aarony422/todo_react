@@ -174,7 +174,7 @@ test('filterTodos should return only incompleted items for the active route', ()
 })
 
 // Tests for todo reducer
-test('todosReducer should add a new todo to the state', () => {
+test('todos should add a new todo to the state', () => {
   const stateBefore = [];
   const action = {
     type: 'ADD_TODO',
@@ -196,7 +196,7 @@ test('todosReducer should add a new todo to the state', () => {
   ).toEqual(stateAfter);
 })
 
-test('todosReducer should toggle the isComplete property of todo item with id', () => {
+test('todos should toggle the isComplete property of todo item with id', () => {
   const stateBefore = [
     {
       id: 0,
