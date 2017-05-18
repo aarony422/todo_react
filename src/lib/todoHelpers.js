@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+//import { combineReducers } from 'redux';
 
 export const addTodo = (list, item) => [...list, item]
 
@@ -84,6 +84,21 @@ const currentTodo = (state='', action) => {
       return action.name;
     default:
       return state;
+  }
+}
+
+const combineReducers = (reducers) => {
+  return (state={}, action) => {
+    return Object.keys(reducers).reduce(
+      (nextState, key) => {
+        nextState[key] = reducers[key](
+          state[key],
+          action
+        )
+        return nextState;
+      },
+      {}
+    )
   }
 }
 
