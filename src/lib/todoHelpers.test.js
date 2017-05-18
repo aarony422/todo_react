@@ -1,4 +1,5 @@
-import {addTodo, findById, toggleTodo, updateTodo, removeTodo, filterTodos, todos} from './todoHelpers'
+import {addTodo, findById, toggleTodo, updateTodo, removeTodo, filterTodos} from './todoHelpers'
+import {todos} from './todoReducers'
 import deepFreeze from 'deep-freeze'
 
 // Test follows a standard structure: arrange, act, assert
