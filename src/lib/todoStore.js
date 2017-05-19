@@ -53,10 +53,36 @@ const currentTodo = (state='', action) => {
   }
 }
 
+// message reducer
+const message = (state='', action) => {
+  switch(action.type) {
+    case 'DISPLAY_MESSAGE':
+      return action.message;
+    case 'REMOVE_MESSAGE':
+      return '';
+    default:
+      return state;
+  }
+}
+
+// error Message reducer
+const errorMessage = (state='', action) => {
+  switch(action.type) {
+    case 'DISPLAY_MESSAGE':
+      return action.message;
+    case 'REMOVE_MESSAGE':
+      return '';
+    default:
+      return state;
+  }
+}
+
 // Reducer composition with objects
 // top-level reducer
 export const todoApp = combineReducers({
   todos,
   visibilityFilter,
-  currentTodo
+  currentTodo,
+  message,
+  errorMessage
 })

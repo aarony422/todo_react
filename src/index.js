@@ -2,9 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
-import {Router} from './components/router'
+import { createStore } from 'redux';
+import { todoApp } from './lib/todoStore';
 
-ReactDOM.render(
-  <Router><App /></Router>,
-  document.getElementById('root')
-);
+const store = createStore(todoApp)
+
+const render = () => {
+  ReactDOM.render(
+    <App store={store}/>,
+    document.getElementById('root')
+  );
+}
+
+store.subscribe(render)
+render();
