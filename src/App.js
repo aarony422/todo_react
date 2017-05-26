@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
-import { generateId } from './lib/todoHelpers'
+import { generateId, getVisibleTodos } from './lib'
+import { FilterLinks } from './components/router'
 
 class App extends Component {
   render() {
     const store = this.props.store;
+
+    const {
+      todos,
+      visibilityFilter
+    } = store.getState();
+
+    const visibleTodos = getVisibleTodos(
+      todos,
+      visibilityFilter
+    );
+
     return (
       <div>
         <input ref={node => {
@@ -21,7 +33,7 @@ class App extends Component {
           Add Todo
         </button>
         <ul>
-          {store.getState().todos.map(todo =>
+          {visibleTodos.map(todo =>
             <li key={todo.id}
                 onClick={() => {
                   store.dispatch({
@@ -38,6 +50,9 @@ class App extends Component {
             </li>
           )}
         </ul>
+        <FilterLinks
+          store={store}
+          currentVisibilityFilter={visibilityFilter}/>
       </div>
     );
   }
