@@ -3,6 +3,7 @@ import { generateId } from './lib/todoHelpers'
 
 class App extends Component {
   render() {
+    const store = this.props.store;
     return (
       <div>
         <input ref={node => {
@@ -10,7 +11,7 @@ class App extends Component {
           }}/>
         <button
           onClick={() => {
-            this.props.store.dispatch({
+            store.dispatch({
               type:'ADD_TODO',
               name: this.input.value,
               id: generateId()
@@ -20,8 +21,19 @@ class App extends Component {
           Add Todo
         </button>
         <ul>
-          {this.props.store.getState().todos.map(todo =>
-            <li key={todo.id}>
+          {store.getState().todos.map(todo =>
+            <li key={todo.id}
+                onClick={() => {
+                  store.dispatch({
+                    type: 'TOGGLE_TODO',
+                    id: todo.id
+                  });
+                }}
+                style={{
+                  textDecoration: todo.isComplete ?
+                    'line-through' :
+                    'none'
+                }}>
               {todo.name}
             </li>
           )}
