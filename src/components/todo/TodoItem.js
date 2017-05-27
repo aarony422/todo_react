@@ -15,3 +15,9 @@ export const TodoItem = ({
     {name}
   </li>
 );
+
+TodoItem.propTypes = {
+  onClick: React.PropTypes.func.isRequired,
+  isComplete: React.PropTypes.bool.isRequired,
+  name: React.PropTypes.string.isRequired
+}

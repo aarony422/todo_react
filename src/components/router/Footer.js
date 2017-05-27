@@ -1,12 +1,10 @@
 import React from 'react'
 import { FilterLink } from './FilterLink'
 
-export const FilterLinks = (props) => {
-  const {
-    store,
-    currentVisibilityFilter
-  } = props;
-
+export const Footer = ({
+  currentVisibilityFilter,
+  onFilterLinkClick
+}) => {
   return (
     <div>
       Show:
@@ -14,25 +12,25 @@ export const FilterLinks = (props) => {
       <FilterLink
         filter='SHOW_ALL'
         filterName='All'
-        store={store}
+        onFilterLinkClick={() => onFilterLinkClick('SHOW_ALL')}
         currentVisibilityFilter={currentVisibilityFilter}/>
       {' '}
       <FilterLink
         filter='SHOW_ACTIVE'
         filterName='Active'
-        store={store}
+        onFilterLinkClick={() => onFilterLinkClick('SHOW_ACTIVE')}
         currentVisibilityFilter={currentVisibilityFilter}/>
       {' '}
       <FilterLink
         filter='SHOW_COMPLETED'
         filterName='Completed'
-        store={store}
+        onFilterLinkClick={() => onFilterLinkClick('SHOW_COMPLETED')}
         currentVisibilityFilter={currentVisibilityFilter}/>
     </div>
   )
 }
 
-FilterLinks.propTypes = {
-  store: React.PropTypes.object.isRequired, // bad! Refactor later?
+Footer.propTypes = {
+  onFilterLinkClick: React.PropTypes.func.isRequired, // bad! Refactor later?
   currentVisibilityFilter: React.PropTypes.string.isRequired
 }

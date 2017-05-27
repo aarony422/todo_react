@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { generateId, getVisibleTodos } from './lib'
-import { FilterLinks } from './components/router'
+import { Footer } from './components/router'
 import { TodoList } from './components/todo'
 
 class App extends Component {
@@ -41,8 +41,13 @@ class App extends Component {
               id
             })
           } />
-        <FilterLinks
-          store={store}
+        <Footer
+          onFilterLinkClick={filter => {
+            store.dispatch({
+              type: 'SET_VISIBILITY_FILTER',
+              filter
+            });
+          }}
           currentVisibilityFilter={visibilityFilter}/>
       </div>
     );

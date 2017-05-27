@@ -1,1 +1,1 @@
-export {FilterLinks} from './FilterLinks'
+export { Footer } from './Footer'

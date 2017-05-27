@@ -15,3 +15,8 @@ export const TodoList = ({
     )}
   </ul>
 );
+
+TodoList.propTypes = {
+  todos: React.PropTypes.array.isRequired,
+  onTodoClick: React.PropTypes.func.isRequired
+}
