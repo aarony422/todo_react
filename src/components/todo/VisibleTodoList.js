@@ -4,7 +4,7 @@ import { TodoList } from './TodoList'
 
 export class VisibleTodoList extends React.Component {
   componentDidMount() {
-    const { store } = this.props;
+    const { store } = this.context;
     this.unsubscribe = store.subscribe(() =>
       this.forceUpdate()
     );
@@ -15,8 +15,7 @@ export class VisibleTodoList extends React.Component {
   }
 
   render() {
-    const props = this.props;
-    const { store } = props;
+    const { store } = this.context;
     const state = store.getState();
 
     return (
@@ -38,6 +37,7 @@ export class VisibleTodoList extends React.Component {
   }
 }
 
-VisibleTodoList.propTypes = {
-  store: React.PropTypes.object.isRequired
+// Define context types that will be received from parent
+VisibleTodoList.contextTypes = {
+  store: React.PropTypes.object
 }

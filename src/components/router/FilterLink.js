@@ -7,7 +7,7 @@ import {Link} from './Link'
 // when rendering. We then delegate the rendering to Link.
 export class FilterLink extends React.Component {
   componentDidMount() {
-    const { store } = this.props;
+    const { store } = this.context;
     this.unsubscribe = store.subscribe(() =>
       this.forceUpdate()
     );
@@ -19,7 +19,7 @@ export class FilterLink extends React.Component {
 
   render() {
     const props = this.props;
-    const { store } = props;
+    const { store } = this.context;
     const state = store.getState();
 
     return (
@@ -40,6 +40,7 @@ export class FilterLink extends React.Component {
   }
 }
 
-FilterLink.propTypes = {
-  store: React.PropTypes.object.isRequired
+// Define context types that will be received from parent
+FilterLink.contextTypes = {
+  store: React.PropTypes.object
 }
