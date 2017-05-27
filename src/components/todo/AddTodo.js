@@ -1,7 +1,8 @@
 import React from 'react'
+import { generateId } from '../../lib/todoHelpers'
 
 export const AddTodo = ({
-  onAddClick
+  store
 }) => {
   let input;
   return (
@@ -11,7 +12,11 @@ export const AddTodo = ({
         }}/>
       <button
         onClick={() => {
-          onAddClick(input.value);
+          store.dispatch({
+            type: 'ADD_TODO',
+            id: generateId(),
+            name: input.value
+          });
           input.value = '';
         }}>
         Add Todo
@@ -21,5 +26,5 @@ export const AddTodo = ({
 }
 
 AddTodo.propTypes = {
-  onAddClick: React.PropTypes.func.isRequired
+  store: React.PropTypes.object.isRequired
 }

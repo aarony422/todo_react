@@ -4,7 +4,7 @@ import {Link} from './Link'
 // Container Component that provides the data and behavior for Link, the presentational
 // component. When FilterLink mounts, it subscribes to the store, and re-renders
 // when the store changes. This is because this component actually uses the store's state
-// when rendering. We then delegate the rendering to Link. 
+// when rendering. We then delegate the rendering to Link.
 export class FilterLink extends React.Component {
   componentDidMount() {
     this.unsubscribe = this.props.store.subscribe(() =>
@@ -36,4 +36,8 @@ export class FilterLink extends React.Component {
       </Link>
     );
   }
+}
+
+FilterLink.propTypes = {
+  store: React.PropTypes.object.isRequired
 }

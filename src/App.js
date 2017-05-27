@@ -1,36 +1,17 @@
 import React from 'react';
-import { generateId, getVisibleTodos } from './lib'
 import { Footer } from './components/router'
-import { TodoList, AddTodo } from './components/todo'
+import { AddTodo, VisibleTodoList } from './components/todo'
+import { createStore } from 'redux';
+import { todoApp } from './lib/todoStore';
 
-export const App = ({
-  store
-}) => {
-
-  const {
-    todos,
-    visibilityFilter
-  } = store.getState();
-
+export const App = () => {
+  const store = createStore(todoApp)
   return (
     <div>
       <AddTodo
-        onAddClick={name => {
-          store.dispatch({
-            type: 'ADD_TODO',
-            id: generateId(),
-            name
-          });
-        }
-        }/>
-      <TodoList
-        todos={getVisibleTodos(todos,visibilityFilter)}
-        onTodoClick={id =>
-          store.dispatch({
-            type: 'TOGGLE_TODO',
-            id
-          })
-        } />
+        store={store}/>
+      <VisibleTodoList
+        store={store}/>
       <Footer
         store={store}/>
     </div>
