@@ -7,8 +7,8 @@ import {Link} from './Link'
 // when rendering. We then delegate the rendering to Link.
 export class FilterLink extends React.Component {
   componentDidMount() {
-    this.unsubscribe = this.props.store.subscribe(() =>
-      // re-render this component only, as opposed to the entire app
+    const { store } = this.props;
+    this.unsubscribe = store.subscribe(() =>
       this.forceUpdate()
     );
   }
@@ -19,14 +19,16 @@ export class FilterLink extends React.Component {
 
   render() {
     const props = this.props;
-    const state = props.store.getState();
+    const { store } = props;
+    const state = store.getState();
+
     return (
       <Link
         active={
           props.filter === state.visibilityFilter
         }
         onClick={() => {
-          props.store.dispatch({
+          store.dispatch({
             type: 'SET_VISIBILITY_FILTER',
             filter: props.filter
           })
