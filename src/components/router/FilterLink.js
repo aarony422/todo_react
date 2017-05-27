@@ -12,7 +12,10 @@ export const FilterLink = ({
   return (
     <a
       href='#'
-      onClick={onFilterLinkClick}
+      onClick={e => {
+        e.preventDefault();
+        onFilterLinkClick();
+      }}
     >
       {filterName}
     </a>

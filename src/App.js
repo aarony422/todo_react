@@ -1,57 +1,46 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { generateId, getVisibleTodos } from './lib'
 import { Footer } from './components/router'
-import { TodoList } from './components/todo'
+import { TodoList, AddTodo } from './components/todo'
 
-class App extends Component {
-  render() {
-    const store = this.props.store;
+export const App = ({
+  store
+}) => {
 
-    const {
-      todos,
-      visibilityFilter
-    } = store.getState();
+  const {
+    todos,
+    visibilityFilter
+  } = store.getState();
 
-    const visibleTodos = getVisibleTodos(
-      todos,
-      visibilityFilter
-    );
-
-    return (
-      <div>
-        <input ref={node => {
-            this.input = node;
-          }}/>
-        <button
-          onClick={() => {
-            store.dispatch({
-              type:'ADD_TODO',
-              name: this.input.value,
-              id: generateId()
-            });
-            this.input.value = '';
-          }}>
-          Add Todo
-        </button>
-        <TodoList
-          todos={visibleTodos}
-          onTodoClick={id =>
-            store.dispatch({
-              type: 'TOGGLE_TODO',
-              id
-            })
-          } />
-        <Footer
-          onFilterLinkClick={filter => {
-            store.dispatch({
-              type: 'SET_VISIBILITY_FILTER',
-              filter
-            });
-          }}
-          currentVisibilityFilter={visibilityFilter}/>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <AddTodo
+        onAddClick={name => {
+          store.dispatch({
+            type: 'ADD_TODO',
+            id: generateId(),
+            name
+          });
+        }
+        }/>
+      <TodoList
+        todos={getVisibleTodos(todos,visibilityFilter)}
+        onTodoClick={id =>
+          store.dispatch({
+            type: 'TOGGLE_TODO',
+            id
+          })
+        } />
+      <Footer
+        onFilterLinkClick={filter => {
+          store.dispatch({
+            type: 'SET_VISIBILITY_FILTER',
+            filter
+          });
+        }}
+        currentVisibilityFilter={visibilityFilter}/>
+    </div>
+  );
 }
 
 export default App;
