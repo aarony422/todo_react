@@ -32,13 +32,7 @@ export const App = ({
           })
         } />
       <Footer
-        onFilterLinkClick={filter => {
-          store.dispatch({
-            type: 'SET_VISIBILITY_FILTER',
-            filter
-          });
-        }}
-        currentVisibilityFilter={visibilityFilter}/>
+        store={store}/>
     </div>
   );
 }

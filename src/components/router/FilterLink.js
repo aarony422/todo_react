@@ -1,30 +1,39 @@
 import React from 'react'
+import {Link} from './Link'
 
-export const FilterLink = ({
-  currentVisibilityFilter,
-  filter,
-  filterName,
-  onFilterLinkClick
-}) => {
-  if (currentVisibilityFilter === filter) {
-    return <span>{filterName}</span>
+// Container Component that provides the data and behavior for Link, the presentational
+// component. When FilterLink mounts, it subscribes to the store, and re-renders
+// when the store changes. This is because this component actually uses the store's state
+// when rendering. We then delegate the rendering to Link. 
+export class FilterLink extends React.Component {
+  componentDidMount() {
+    this.unsubscribe = this.props.store.subscribe(() =>
+      // re-render this component only, as opposed to the entire app
+      this.forceUpdate()
+    );
   }
-  return (
-    <a
-      href='#'
-      onClick={e => {
-        e.preventDefault();
-        onFilterLinkClick();
-      }}
-    >
-      {filterName}
-    </a>
-  )
-}
 
-FilterLink.propTypes = {
-  filter: React.PropTypes.string.isRequired,
-  filterName: React.PropTypes.string.isRequired,
-  currentVisibilityFilter: React.PropTypes.string.isRequired,
-  onFilterLinkClick: React.PropTypes.func.isRequired
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  render() {
+    const props = this.props;
+    const state = props.store.getState();
+    return (
+      <Link
+        active={
+          props.filter === state.visibilityFilter
+        }
+        onClick={() => {
+          props.store.dispatch({
+            type: 'SET_VISIBILITY_FILTER',
+            filter: props.filter
+          })
+        }}
+      >
+      {props.children}
+      </Link>
+    );
+  }
 }
