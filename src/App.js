@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { generateId, getVisibleTodos } from './lib'
 import { FilterLinks } from './components/router'
+import { TodoList } from './components/todo'
 
 class App extends Component {
   render() {
@@ -32,24 +33,14 @@ class App extends Component {
           }}>
           Add Todo
         </button>
-        <ul>
-          {visibleTodos.map(todo =>
-            <li key={todo.id}
-                onClick={() => {
-                  store.dispatch({
-                    type: 'TOGGLE_TODO',
-                    id: todo.id
-                  });
-                }}
-                style={{
-                  textDecoration: todo.isComplete ?
-                    'line-through' :
-                    'none'
-                }}>
-              {todo.name}
-            </li>
-          )}
-        </ul>
+        <TodoList
+          todos={visibleTodos}
+          onTodoClick={id =>
+            store.dispatch({
+              type: 'TOGGLE_TODO',
+              id
+            })
+          } />
         <FilterLinks
           store={store}
           currentVisibilityFilter={visibilityFilter}/>
