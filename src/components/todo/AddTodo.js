@@ -1,6 +1,6 @@
 import React from 'react'
-import { generateId } from '../../lib/todoHelpers'
 import { connect } from 'react-redux'
+import { addTodoAction } from '../../lib'
 
 // AddTodo component no longer receives the store as an argument, but just
 // receives the dispatch function, which it assumes will be passed in correctly
@@ -13,11 +13,7 @@ let addTodo = ({ dispatch }) => {
         }}/>
       <button
         onClick={() => {
-          dispatch({
-            type: 'ADD_TODO',
-            id: generateId(),
-            name: input.value
-          });
+          dispatch(addTodoAction(input.value));
           input.value = '';
         }}>
         Add Todo

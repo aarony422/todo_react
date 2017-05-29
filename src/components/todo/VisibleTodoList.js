@@ -1,6 +1,7 @@
 import { getVisibleTodos } from '../../lib/todoHelpers'
 import { TodoList } from './TodoList'
 import { connect } from 'react-redux'
+import { toggleTodoAction } from '../../lib'
 
 // take state of the redux store, and returns the props that the presentational
 // components will use. These props will be updated anytime the state changes
@@ -18,10 +19,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onTodoClick: (id) => {
-      dispatch({
-        type: 'TOGGLE_TODO',
-        id
-      })
+      dispatch(toggleTodoAction(id))
     }
   }
 }

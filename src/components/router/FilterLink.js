@@ -1,6 +1,6 @@
-import React from 'react'
 import {Link} from './Link'
 import { connect } from 'react-redux'
+import { setVisibilityFilterAction } from '../../lib'
 
 // props of the child prop is passed in as the second parameter
 const mapStateToProps = (state, ownProps) => {
@@ -12,10 +12,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onClick: () => {
-      dispatch({
-        type: 'SET_VISIBILITY_FILTER',
-        filter: ownProps.filter
-      })
+      dispatch(setVisibilityFilterAction(ownProps.filter))
     }
   }
 }
