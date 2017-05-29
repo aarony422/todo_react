@@ -1,8 +1,10 @@
 import React from 'react'
 import { generateId } from '../../lib/todoHelpers'
+import { connect } from 'react-redux'
 
-// for stateless function components, context is passed as a second argument
-export const AddTodo = (props, { store }) => {
+// AddTodo component no longer receives the store as an argument, but just
+// receives the dispatch function, which it assumes will be passed in correctly
+let addTodo = ({ dispatch }) => {
   let input;
   return (
     <div>
@@ -11,7 +13,7 @@ export const AddTodo = (props, { store }) => {
         }}/>
       <button
         onClick={() => {
-          store.dispatch({
+          dispatch({
             type: 'ADD_TODO',
             id: generateId(),
             name: input.value
@@ -24,7 +26,7 @@ export const AddTodo = (props, { store }) => {
   )
 }
 
-// Define context types that will be received from parent
-AddTodo.contextTypes = {
-  store: React.PropTypes.object
-}
+// connect call without arguments returns a container component that does not
+// subscribe to the store, However, will pass dispatch to the component that
+// it wraps.
+export const AddTodo = connect()(addTodo);
